@@ -12,8 +12,8 @@ public class BaseController {
 
 	@ResponseStatus(code = HttpStatus.EXPECTATION_FAILED)
 	@ExceptionHandler(Exception.class)
-	void handleAllException(Exception ex) {
-	     
+	String handleAllException(Exception ex) {
+	     return ex.getMessage();
 	}
 
 }

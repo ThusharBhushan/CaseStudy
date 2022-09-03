@@ -2,58 +2,64 @@ package com.bookservice.entity;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
-import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+
+@Table(	name = "book", 
+uniqueConstraints = { 
+		@UniqueConstraint(columnNames = "id")
+	})
 public class Book {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "user_id", nullable = false)
-	private User user;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	private Long userid;
 
 	private Blob logo;
 	@NotBlank(message = "Title must not be empty")
 	private String title;
 	@NotBlank(message = "Category must not be empty")
 	private String category;
-	@NotBlank(message = "price must be not empty")
-	private BigDecimal price;
+	
+	@NotBlank(message = "Price must not be empty")
+	private String price;
+	
 	@NotBlank(message = "Author name must be not empty")
 	private String author;
 	@NotBlank(message = "Publisher name must be not empty")
 	private String publisher;
 	@NotBlank(message = "Published date  must be not empty")
-	private Date publishedDate;
+	private String published_date;
 	private String active;
+    private String content;
+	
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-	public User getUser() {
-		return user;
+	public Long getUserid() {
+		return userid;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserid(Long userid) {
+		this.userid = userid;
 	}
 
 	public Blob getLogo() {
@@ -80,11 +86,13 @@ public class Book {
 		this.category = category;
 	}
 
-	public BigDecimal getPrice() {
+	
+
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 
@@ -104,12 +112,13 @@ public class Book {
 		this.publisher = publisher;
 	}
 
-	public Date getPublishedDate() {
-		return publishedDate;
+	
+	public String getPublished_date() {
+		return published_date;
 	}
 
-	public void setPublishedDate(Date publishedDate) {
-		this.publishedDate = publishedDate;
+	public void setPublished_date(String published_date) {
+		this.published_date = published_date;
 	}
 
 	public String getActive() {
@@ -119,5 +128,15 @@ public class Book {
 	public void setActive(String active) {
 		this.active = active;
 	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
+	
 
 }

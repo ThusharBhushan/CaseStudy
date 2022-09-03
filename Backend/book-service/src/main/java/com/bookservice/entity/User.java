@@ -1,5 +1,7 @@
 package com.bookservice.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,15 +9,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 
+import lombok.NoArgsConstructor;
+
 @Entity
+@Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = { "id", "email" })
+
+})
+
 public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 	@NotBlank(message = "Username must not be empty")
-	private String userName;
+	private String username;
 	@NotBlank(message = "Password must not be empty")
 	private String password;
 	@NotBlank(message = "Email must not be empty")
@@ -23,27 +34,35 @@ public class User {
 	@NotBlank(message = "Gender must not be empty")
 	private String gender;
 	@NotBlank(message = "Role must be either Reader/Author")
-	private String userRole;
+	private String userrole;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Book book;
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+	
 
-
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+
+
+
+
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
+
 
 	public String getPassword() {
 		return password;
@@ -61,20 +80,15 @@ public class User {
 		this.gender = gender;
 	}
 
-	public String getUserRole() {
-		return userRole;
+	
+
+	public String getUserrole() {
+		return userrole;
 	}
 
-	public void setUserRole(String userRole) {
-		this.userRole = userRole;
-	}
 
-	public Book getBook() {
-		return book;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
+	public void setUserrole(String userrole) {
+		this.userrole = userrole;
 	}
 
 	public String getEmail() {

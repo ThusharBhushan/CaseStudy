@@ -35,14 +35,16 @@ public class BookControllerTest {
 		Book book = new Book();
 		User user = new User();
 		book.setTitle("TestBook");
-		user.setId(1);
-		book.setUser(user);
+		user.setId((long) 1);
+		book.setUserid(user.getId());
 		book.setPublisher("John");
-		book.setPublishedDate(new Date());
-		book.setPrice(new BigDecimal("50.40"));
+		book.setPublished_date("");
+		book.setPrice("50.40");
 		book.setCategory("Adventure");
 		book.setActive("true");
-		when(bookController.createBook(user.getId(), book)).thenReturn(book);
+		
+		ResponseEntity responseEntity = new ResponseEntity<>(HttpStatus.CREATED);
+		when(bookController.createBook(user.getId(), book)).thenReturn(responseEntity);
 		assertEquals(book.getId(), 1);
 
 	}
@@ -50,15 +52,15 @@ public class BookControllerTest {
 	@Test
 	void testUpdateBookException() {
 		Book book = new Book();
-		book.setId(1);
+		book.setId((long) 1);
 		book.setTitle("TestBook");
 
 		User user = new User();
-		user.setId(1);
-		book.setUser(user);
+		user.setId((long) 1);
+		book.setUserid(user.getId());
 		book.setPublisher("John");
-		book.setPublishedDate(new Date());
-		book.setPrice(new BigDecimal("50.40"));
+		book.setPublished_date("");
+		book.setPrice(("50.40"));
 		book.setCategory("Thriller");
 		book.setActive("true");
 		
@@ -70,15 +72,15 @@ public class BookControllerTest {
 	@Test
 	void testUpdateBookSuccess() {
 		Book book = new Book();
-		book.setId(1);
+		book.setId((long) 1);
 		book.setTitle("TestBook");
 
 		User user = new User();
-		user.setId(1);
-		book.setUser(user);
+		user.setId((long) 1);
+		book.setUserid(user.getId());
 		book.setPublisher("John");
-		book.setPublishedDate(new Date());
-		book.setPrice(new BigDecimal("50.40"));
+		book.setPublished_date("");
+		book.setPrice("50.40");
 		book.setCategory("Thriller");
 		book.setActive("true");
 		

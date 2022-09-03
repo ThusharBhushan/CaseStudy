@@ -14,10 +14,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity(
+		prePostEnabled = true)
 public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
@@ -32,7 +32,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 		.authorizeRequests()
-		.anyRequest().authenticated();
+		.anyRequest().permitAll();
 	}
 	
 	@Override

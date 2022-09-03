@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import com.bookservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/digitalbooks/author")
 public class UserController {
@@ -39,7 +41,7 @@ public class UserController {
 	ResponseEntity login(@Valid @RequestBody User user) {
 		Authentication authentication;
 		authentication = authentiactionManager
-				.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+				.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -47,10 +49,10 @@ public class UserController {
 	@PostMapping("/signup")
 	ResponseEntity createAuthorAccount(@Valid @RequestBody User user) {
 
-		if (userRepo.existsByEmail(user.getEmail())) {
+		if (userRepo.existsByemail(user.getEmail())) {
 			return ResponseEntity.badRequest().body("Email exist already!Please try with different mailid");
 		}
-		if (userRepo.existsByUsername(user.getUserName())) {
+		if (userRepo.existsByusername(user.getUsername())) {
 			return ResponseEntity.badRequest().body("UserName exist already!Please try with different username");
 		}
 

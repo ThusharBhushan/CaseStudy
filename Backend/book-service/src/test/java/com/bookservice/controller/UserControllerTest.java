@@ -7,6 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.bookservice.entity.User;
 import com.bookservice.service.UserService;
@@ -25,8 +27,9 @@ public class UserControllerTest {
 		User user = new User();
 		
 		
+		ResponseEntity responseEntity = new ResponseEntity<>(HttpStatus.CREATED);
 		
-		when(userController.createAuthorAccount(user)).thenReturn("User Details registered successfully");
+		when(userController.createAuthorAccount(user)).thenReturn(responseEntity);
 		userService.createAuthor(user);
 		assertEquals(user.getId(), user.getId());
 	}

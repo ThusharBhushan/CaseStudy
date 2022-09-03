@@ -2,13 +2,20 @@ package com.bookservice.service;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.bookservice.entity.User;
 
+
 public class CustomUserDetails implements UserDetails {
 	
+	
+	@Autowired
 	private User user;
 	
 
@@ -28,7 +35,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return user.getUserName();
+		return user.getUsername();
 	}
 
 	@Override
