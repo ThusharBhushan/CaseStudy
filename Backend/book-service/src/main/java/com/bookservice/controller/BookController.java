@@ -1,6 +1,6 @@
 package com.bookservice.controller;
 
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookservice.entity.Book;
-import com.bookservice.exception.BookNotFoundException;
 import com.bookservice.repository.BookRepository;
 import com.bookservice.repository.UserRepository;
 import com.bookservice.service.BookService;
@@ -54,33 +53,34 @@ public class BookController extends BaseController {
 
 	}
 
-	@PutMapping("author/{authorId}/books")
+	@PutMapping("author/{authorId}/books/{bookId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResponseEntity updateBook(@PathVariable("authorId") Long authorId, @PathVariable("authorId") Long bookId,
-			@RequestBody Book book) throws BookNotFoundException {
+	public ResponseEntity updateBook(@PathVariable("authorId") Long authorId, @PathVariable("bookId") Long bookId,
+			@RequestBody Book book) {
 
 		if (!bookRepository.existsById((long) authorId)) {
 			return new ResponseEntity<>("Author does not exist", HttpStatus.UNAUTHORIZED);
 		}
+		book.setUserid(authorId);
 		Book updateBook = bookService.updateBook(authorId, bookId, book);
 		if (updateBook == null) {
 			return new ResponseEntity<>("Book does not exist", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(updateBook, HttpStatus.FOUND);
+		return new ResponseEntity<>(updateBook, HttpStatus.CREATED);
 
 	}
 
 	@GetMapping("/books/search")
 	@ResponseBody
 	public ResponseEntity searchBook(@RequestParam(required = false) String category,
-			@RequestParam(required = false) String author, @RequestParam(required = false) String price,
+			@RequestParam(required = false) String author, @RequestParam(required = false) BigDecimal price,
 			@RequestParam(required = false) String publisher) {
-		Set<Book> bookList=bookService.searchBook(category, author, price, publisher);
-		if(bookList!=null) {
+		Set<Book> bookList = bookService.searchBook(category, author, price, publisher);
+		if (!bookList.isEmpty()) {
 			return new ResponseEntity<>(bookList, HttpStatus.FOUND);
-			
+
 		}
-		return new ResponseEntity<>("No Books Found", HttpStatus.NOT_FOUND);
+		return ResponseEntity.ok().body("No Books Found");
 
 	}
 

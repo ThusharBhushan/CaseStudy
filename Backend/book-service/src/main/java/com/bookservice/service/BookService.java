@@ -1,5 +1,6 @@
 package com.bookservice.service;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -23,14 +24,22 @@ public class BookService {
 	public Book updateBook(Long authorId, Long bookId, Book book) {
 		Optional<Book> bookToUpdate = bookRepository.findById((long) bookId);
 		if (bookToUpdate.isPresent()) {
-			return bookRepository.save(book);
+			Book updatedBook =bookToUpdate.get();
+			updatedBook.setTitle(book.getTitle());
+			updatedBook.setPublisher(book.getPublisher());
+			updatedBook.setPublished_date(book.getPublished_date());
+			updatedBook.setPrice(book.getPrice());
+			updatedBook.setContent(book.getContent());
+			updatedBook.setCategory(book.getCategory());
+			updatedBook.setAuthor(book.getAuthor());
+			return bookRepository.save(updatedBook);
 		}
 
 		return null;
 
 	}
 
-	public Set<Book> searchBook(String category, String author, String price, String publisher) {
+	public Set<Book> searchBook(String category, String author, BigDecimal price, String publisher) {
 		Set<Book> bookList = new HashSet<>();;
 		if (category != null) {
 			bookList.addAll(bookRepository.searchBookByCategory(category));

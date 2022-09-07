@@ -1,0 +1,22 @@
+<h1 align="center"> Create Books</h1>
+<pre>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="title">Title  :</label>
+                   <input name="title" [(ngModel)]='book.title'> <br>
+           <label for="category">Category :</label>
+                    <input name="category" [(ngModel)]='book.category'> <br>
+            <label for="price">Price :</label>
+                    <input name="price" [(ngModel)]='book.price'> <br>
+            <label for="publisher">Publisher :</label>
+                    <input name="publisher" [(ngModel)]='book.publisher'> <br>
+           <label for="active"> Active :</label>
+                   <input name="active" [(ngModel)]='book.active'><br> 
+            <label for="content">Content :</label>
+                    <input name="content"  [(ngModel)]='book.content' style="height:120px; width:200px"> <br>
+         </div>
+
+
+<button (click)='createBook()' class='btn btn-success'>Save</button>
+</div>
+</pre>

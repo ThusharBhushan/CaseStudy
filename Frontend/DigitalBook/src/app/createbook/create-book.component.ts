@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BookserviceService } from '../bookservice.service';
 
 @Component({
-  selector: 'create-book',
+  selector: 'createbook',
   templateUrl: './create-book.component.html',
   styleUrls: ['./create-book.component.css']
 })
