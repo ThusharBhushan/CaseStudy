@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -14,31 +15,32 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   isLoggedIn = false;
   errorMessage = '';
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, public route: Router) { }
 
   ngOnInit(): void {
   }
 
+
+
   onSubmit(): void {
-    const {username,password} =this.form;
-    const observable=this.authService.login(username, password);
+    const { username, password } = this.form;
+    const observable = this.authService.login(username, password);
     observable.subscribe(
-      data=>{
-      console.log(data);
-      this.isLoginFailed=false;
-      this.isLoggedIn=true
+      (responseBody: any) => {
+        console.log(responseBody);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        localStorage.setItem('currentUser', username);
+        localStorage.setItem('isLoggedIn', 'true');
+        this.route.navigate(['/createBook']);
       },
-      err=> {
+      (err: any) => {
         this.errorMessage = err.error.message;
+        console.log('Error :' + this.errorMessage);
         this.isLoginFailed = true;
+        localStorage.setItem('isLoggedIn', 'false');
+        localStorage.removeItem('currentUser');
       }
-    
-
     );
-
-
-
-
   }
-
 }

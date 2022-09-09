@@ -41,7 +41,6 @@ public class UserControllerTest {
 		Base64.Decoder decoder = Base64.getMimeDecoder();  
 		User userToCheck = userRepo.getUser(user.getUsername());
 		String decodedPwd = new String (decoder.decode(user.getPassword()));
-		user.setPassword(decodedPwd);
 //		Mockito.lenient().when(userToCheck.getPassword().equals(user.getPassword())).thenReturn(true);
 		ResponseEntity responseEntity = new ResponseEntity<>("Logged in successfully", HttpStatus.OK);
 		assertEquals(responseEntity.getBody(), "Logged in successfully");

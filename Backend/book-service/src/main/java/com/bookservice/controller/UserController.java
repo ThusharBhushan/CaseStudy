@@ -41,7 +41,7 @@ public class UserController {
 			User existingUser = userRepo.getUser(user.getUsername());
 			String decodedPwd = new String (decoder.decode(existingUser.getPassword()));
 			if (decodedPwd.equals(user.getPassword())) {
-				return new ResponseEntity<>("Logged in successfully",HttpStatus.OK);
+				return new ResponseEntity("Logged in successfully",HttpStatus.CREATED);
 			}else {
 				return new ResponseEntity<>("Password is wrong",HttpStatus.OK);
 			}

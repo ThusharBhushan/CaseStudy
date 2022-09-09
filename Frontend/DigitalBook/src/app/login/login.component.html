@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label class="form-control-label" for="password">Password</label>
                         <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
-                            minlength="6" #password="ngModel" />
+                            minlength="2" #password="ngModel" />
 
                         <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
                             <div *ngIf="password.errors?.['required']">Password is required</div>
