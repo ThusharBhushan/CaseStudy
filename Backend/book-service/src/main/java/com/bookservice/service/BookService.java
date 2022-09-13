@@ -24,7 +24,7 @@ public class BookService {
 	public Book updateBook(Long authorId, Long bookId, Book book) {
 		Optional<Book> bookToUpdate = bookRepository.findById((long) bookId);
 		if (bookToUpdate.isPresent()) {
-			Book updatedBook =bookToUpdate.get();
+			Book updatedBook = bookToUpdate.get();
 			updatedBook.setTitle(book.getTitle());
 			updatedBook.setPublisher(book.getPublisher());
 			updatedBook.setPublished_date(book.getPublished_date());
@@ -40,22 +40,25 @@ public class BookService {
 	}
 
 	public Set<Book> searchBook(String category, String author, BigDecimal price, String publisher) {
-		Set<Book> bookList = new HashSet<>();;
+		Set<Book> bookList = new HashSet<>();
+		;
 		if (category != null) {
 			bookList.addAll(bookRepository.searchBookByCategory(category));
 		}
 		if (author != null) {
 			bookList.addAll(bookRepository.searchBookByAuthor(author));
-
 		}
 		if (price != null) {
 			bookList.addAll(bookRepository.searchBookByPrice(price));
 		}
 		if (publisher != null) {
 			bookList.addAll(bookRepository.searchBookByPublisher(publisher));
-
 		}
 		return bookList;
+	}
+
+	public Iterable<Book> getAllBooks() {
+		return bookRepository.findAll();
 	}
 
 }

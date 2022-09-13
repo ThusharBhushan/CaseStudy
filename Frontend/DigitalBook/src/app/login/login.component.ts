@@ -24,15 +24,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     const { username, password } = this.form;
-    const observable = this.authService.login(username, password);
-    observable.subscribe(
+    const promise = this.authService.login(username, password);
+    promise.subscribe(
       (responseBody: any) => {
         console.log(responseBody);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        localStorage.setItem('currentUser', username);
+        localStorage.setItem('currentUser', responseBody.username);
+        localStorage.setItem('currentUserId', responseBody.id);
         localStorage.setItem('isLoggedIn', 'true');
-        this.route.navigate(['/createBook']);
+        this.route.navigate(["/createbook"]);
       },
       (err: any) => {
         this.errorMessage = err.error.message;
@@ -40,7 +41,9 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
         localStorage.setItem('isLoggedIn', 'false');
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('currentUserId'); 
       }
     );
+    
   }
 }

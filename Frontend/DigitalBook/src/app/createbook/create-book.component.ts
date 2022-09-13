@@ -7,29 +7,33 @@ import { BookserviceService } from '../bookservice.service';
   styleUrls: ['./create-book.component.css']
 })
 export class CreateBookComponent implements OnInit {
-  
 
+  statusList: any = ['Active', 'Inactive'];  
   book = {
     title: '',
     category: '',
-    price: '',
+    logo :'',
+    price: NaN,
     author: '',
-    publisher :'',
-    published_date :'',
-    active:'',
+    publisher: '',
+    published_date: new Date(),
+    active: '',
     userid: 1,
-    content:''
+    content: ''
   }
-  constructor(public bookservice :BookserviceService) { }
+  shortLink: string = "";
+  selectedFile = null;
+  constructor(public bookservice: BookserviceService) { }
 
   ngOnInit(): void {
   }
 
-  createBook(){
-    this.book.userid=1;
-    this.book.author='Mary'
-    this.book.published_date='03-09-2020';
-    const observable = this.bookservice.createBook(this.book);
+  createBook(book: any) {
+    book.userid = localStorage.getItem('currentUserId');
+    book.author = localStorage.getItem('currentUser');
+    book.published_date = new Date();
+    book.logo=this.shortLink;
+    const observable = this.bookservice.createBook(book);
     observable.subscribe((responseBody: any) => {
       console.log(responseBody);
     },
@@ -38,8 +42,22 @@ export class CreateBookComponent implements OnInit {
       }
     );
   }
-  
-   
 
+  onFileUpload(event: any) {
+    this.selectedFile = event.target.files[0];
   }
+  onUpload() {
+    console.log(this.selectedFile);
+    this.bookservice.upload(this.selectedFile).subscribe(
+      (event: any) => {
+        if (typeof (event) === 'object') {
+          this.shortLink = event.link;
+        }
+      }
+    );
+  }
+
+
+
+}
 

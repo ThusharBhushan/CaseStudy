@@ -15,22 +15,18 @@ export class AuthService {
     });
   }
 
-  register(username: string, email: string, password: string) {
+  register(username: string, email: string, password: string,userrole:string) {
     return this.http.post(AUTH_API + 'signup', {
       username,
       email,
-      password
+      password,userrole
     });
   }
-
-  canActivate(route: Router) {
-    if (localStorage.getItem('currentUser')) {
-        // logged in so return true
-        return true;
-    }
-
-    // not logged in so redirect to login page with the return url
-    this.route.navigateByUrl('/login');
-    return false;
-}
+  logout() {  
+    // localStorage.setItem('isLoggedIn','false');
+    localStorage.removeItem('isLoggedIn'); 
+    localStorage.removeItem('currentUser');
+    this.route.navigate(['/home']);  
+  }
+  
 }

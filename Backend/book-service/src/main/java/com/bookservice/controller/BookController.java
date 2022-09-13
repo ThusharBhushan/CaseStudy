@@ -41,6 +41,11 @@ public class BookController extends BaseController {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@GetMapping("/books")
+	Iterable<Book> getAllUser() {
+		return bookService.getAllBooks();
+	}
 
 	@PostMapping("author/{authorId}/books")
 	public ResponseEntity createBook(@Valid @PathVariable("authorId") Long id, @RequestBody Book book) {
@@ -77,8 +82,7 @@ public class BookController extends BaseController {
 			@RequestParam(required = false) String publisher) {
 		Set<Book> bookList = bookService.searchBook(category, author, price, publisher);
 		if (!bookList.isEmpty()) {
-			return new ResponseEntity<>(bookList, HttpStatus.FOUND);
-
+			return new ResponseEntity<>(bookList, HttpStatus.OK);
 		}
 		return ResponseEntity.ok().body("No Books Found");
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../app/auth.service';
 
 @Component({
@@ -7,12 +8,9 @@ import { AuthService } from '../app/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  isLoggedIn = false;
-  constructor(public authService :AuthService) { }
+  constructor(public authService :AuthService,public route:Router) { }
   ngOnInit(): void {
-
-    if (this.isLoggedIn) {
-    }
+        this.route.navigate(["/home"]);
   }
   title = 'DigitalBook';
 }

@@ -10,6 +10,11 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { CreateBookComponent } from './createbook/create-book.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { HomeComponent } from './home/home.component';
+
+
 
 @NgModule({
   declarations: [
@@ -17,7 +22,10 @@ import { CreateBookComponent } from './createbook/create-book.component';
     UserFormComponent,
     CreateBookComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HeaderComponent,
+    FooterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

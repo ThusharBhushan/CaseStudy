@@ -41,27 +41,27 @@ public class UserController {
 			User existingUser = userRepo.getUser(user.getUsername());
 			String decodedPwd = new String (decoder.decode(existingUser.getPassword()));
 			if (decodedPwd.equals(user.getPassword())) {
-				return new ResponseEntity("Logged in successfully",HttpStatus.CREATED);
+				return new ResponseEntity(existingUser,HttpStatus.OK);
 			}else {
 				return new ResponseEntity<>("Password is wrong",HttpStatus.OK);
 			}
 		}
-		return ResponseEntity.badRequest().body("UserName is wrong");
+		return new ResponseEntity("UserName is wrong",HttpStatus.OK);
 	}
 
 	@PostMapping("/signup")
 	ResponseEntity createAuthorAccount(@Valid @RequestBody User user) {
 		 Base64.Encoder encoder = Base64.getMimeEncoder();  
 		if (userRepo.existsByemail(user.getEmail())) {
-			return ResponseEntity.badRequest().body("Email exist already!Please try with different mailid");
+			return new ResponseEntity("Email exist already!Please try with different mailid",HttpStatus.OK);
 		}
 		if (userRepo.existsByusername(user.getUsername())) {
-			return ResponseEntity.badRequest().body("UserName exist already!Please try with different username");
+			return new ResponseEntity("UserName exist already!Please try with different username",HttpStatus.OK);
 		}
 		user.setPassword(encoder.encodeToString(user.getPassword().getBytes()));
 		userService.createAuthor(user);
 
-		return ResponseEntity.ok("User registered successfully");
+		return ResponseEntity.ok(user);
 	}
 
 }

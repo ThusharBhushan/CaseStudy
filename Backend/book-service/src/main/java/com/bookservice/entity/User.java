@@ -27,9 +27,7 @@ public class User {
 	private String password;
 	@NotBlank(message = "Email must not be empty")
 	private String email;
-	@NotBlank(message = "Gender must not be empty")
 	private String gender;
-	@NotBlank(message = "Role must be either Reader/Author")
 	private String userrole;
 
 	public User() {
