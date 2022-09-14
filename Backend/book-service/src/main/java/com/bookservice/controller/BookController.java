@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookservice.entity.Book;
+import com.bookservice.entity.Payment;
 import com.bookservice.repository.BookRepository;
 import com.bookservice.repository.UserRepository;
 import com.bookservice.service.BookService;
@@ -41,14 +42,31 @@ public class BookController extends BaseController {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@GetMapping("/allbooks/{authorId}")
+	Iterable<Book> getAllBooks(@Valid @PathVariable("authorId") Long id) {
+		return bookService.getAllBooks(id);
+	}
+
+	@GetMapping("/reader/allbooks")
+	Iterable<Book> getAllBooksForReader() {
+		return bookService.getAllBooksForReader();
+	}
 	
-	@GetMapping("/books")
-	Iterable<Book> getAllUser() {
-		return bookService.getAllBooks();
+	@GetMapping("/reader/payment/{paymentId}")
+	Payment getPurchasedBooksForReader(@Valid @PathVariable("paymentId") String paymentId) {
+		return bookService.getPurchasedBooksForReader(paymentId);
+	}
+
+	@PostMapping("/payment/book/{bookId}/username/{username}/mailId/{mailId}")
+	ResponseEntity<?> doPaymentForBook(@Valid @PathVariable("bookId") Long bookId, @PathVariable("bookId") String username,
+			@PathVariable("mailId") String mailId) {
+		Payment payment = bookService.doPayment(bookId,username,mailId);
+		return new ResponseEntity<>(payment, HttpStatus.OK);
 	}
 
 	@PostMapping("author/{authorId}/books")
-	public ResponseEntity createBook(@Valid @PathVariable("authorId") Long id, @RequestBody Book book) {
+	public ResponseEntity<?> createBook(@Valid @PathVariable("authorId") Long id, @RequestBody Book book) {
 		if (!userRepository.existsById(id)) {
 			return new ResponseEntity<>("Author does not exist", HttpStatus.UNAUTHORIZED);
 		}
@@ -60,7 +78,7 @@ public class BookController extends BaseController {
 
 	@PutMapping("author/{authorId}/books/{bookId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResponseEntity updateBook(@PathVariable("authorId") Long authorId, @PathVariable("bookId") Long bookId,
+	public ResponseEntity<?> updateBook(@PathVariable("authorId") Long authorId, @PathVariable("bookId") Long bookId,
 			@RequestBody Book book) {
 
 		if (!bookRepository.existsById((long) authorId)) {
@@ -77,7 +95,7 @@ public class BookController extends BaseController {
 
 	@GetMapping("/books/search")
 	@ResponseBody
-	public ResponseEntity searchBook(@RequestParam(required = false) String category,
+	public ResponseEntity<?> searchBook(@RequestParam(required = false) String category,
 			@RequestParam(required = false) String author, @RequestParam(required = false) BigDecimal price,
 			@RequestParam(required = false) String publisher) {
 		Set<Book> bookList = bookService.searchBook(category, author, price, publisher);

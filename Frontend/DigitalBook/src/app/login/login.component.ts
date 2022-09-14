@@ -33,7 +33,13 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('currentUser', responseBody.username);
         localStorage.setItem('currentUserId', responseBody.id);
         localStorage.setItem('isLoggedIn', 'true');
-        this.route.navigate(["/createbook"]);
+        let userRole: string = responseBody.userrole;
+        localStorage.setItem('userRole', userRole);
+        if (userRole.includes('Author')) {
+          this.route.navigate(["/createbook"]);
+        } else {
+          this.route.navigate(["/allbook"]);
+        }
       },
       (err: any) => {
         this.errorMessage = err.error.message;
@@ -41,9 +47,9 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
         localStorage.setItem('isLoggedIn', 'false');
         localStorage.removeItem('currentUser');
-        localStorage.removeItem('currentUserId'); 
+        localStorage.removeItem('currentUserId');
       }
     );
-    
+
   }
 }

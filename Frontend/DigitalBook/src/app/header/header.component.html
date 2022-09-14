@@ -19,6 +19,11 @@
             <li class="nav-item" *ngIf="isLoggedIn()">
                 <button class="nav-link btn btn-outline-primary" mat-button (click)="onLogout()">Logout</button>
             </li>
+            <li class="nav-item" *ngIf="isLoggedIn()">
+                <button class="nav-link btn btn-outline-primary" mat-button (click)="getAllBook()">AllMyBooks</button>
+            </li>
+            
+            
         </ul>
 
     </nav>

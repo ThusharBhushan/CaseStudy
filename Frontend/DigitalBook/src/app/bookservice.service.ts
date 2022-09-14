@@ -26,9 +26,28 @@ export class BookserviceService {
 
   }
 
-  upload(file:any) {
+  getBook(userid: any) {
+    let appendedURL = URL + "/allbooks/" + userid;
+    return this.http.get(appendedURL);
+
+  }
+
+  upload(file: any) {
     const formData = new FormData();
     formData.append("file", file, file.name);
     return this.http.post(this.baseApiUrl, formData)
+  }
+
+  buyBook(reader: any) {
+    // /payment/book/{bookId}/username/{username}/mailId/{mailId}
+    let appendedURL = URL + "/payment/book/" + reader.bookId + "/username/" + reader.username + "/mailId/" + reader.mailId;
+    return this.http.post(appendedURL,reader);
+
+  }
+
+  searchBookForReader(searchBookReaderPaymentId:String){
+    // "/reader/payment/{paymentId}"
+    let appendedURL = URL + "/reader/payment/" + searchBookReaderPaymentId;
+    return this.http.get(appendedURL);
   }
 }

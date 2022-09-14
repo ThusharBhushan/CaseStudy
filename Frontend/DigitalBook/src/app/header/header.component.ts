@@ -27,6 +27,9 @@ export class HeaderComponent implements OnInit {
   onLogout(){ 
     this.authService.logout();   
   } 
+  getAllBook(){
+    this.route.navigate(["/allbook"]);
+  }
   
 
   

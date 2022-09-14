@@ -1,3 +1,6 @@
+div  {
+    background: #222D32;
+}
 .form-group {
     margin-bottom: 40px;
     outline: 0px;
@@ -37,9 +40,7 @@ input[type=number] {
 body {
     background: #222D32;
     font-family: 'Roboto', sans-serif;
-    background-color: #161414;
 }
-
 .login-btm {
     float: left;
 }

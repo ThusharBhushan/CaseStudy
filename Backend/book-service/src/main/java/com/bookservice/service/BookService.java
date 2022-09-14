@@ -1,15 +1,19 @@
 package com.bookservice.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookservice.entity.Book;
+import com.bookservice.entity.Payment;
 import com.bookservice.repository.BookRepository;
+import com.bookservice.repository.PaymentRepository;
 import com.bookservice.repository.UserRepository;
 
 @Service
@@ -17,6 +21,9 @@ public class BookService {
 
 	@Autowired
 	BookRepository bookRepository;
+	
+	@Autowired
+	PaymentRepository paymentRepository;
 
 	@Autowired
 	UserRepository userRepository;
@@ -57,8 +64,26 @@ public class BookService {
 		return bookList;
 	}
 
-	public Iterable<Book> getAllBooks() {
+	public Iterable<Book> getAllBooks(Long id) {
+		return bookRepository.findBooksByUserId(id);
+	}
+	
+	public Iterable<Book> getAllBooksForReader() {
 		return bookRepository.findAll();
+	}
+	public Payment doPayment(Long bookId,String userName,String mailId) {
+		UUID uuid=UUID.randomUUID();  
+		Payment payment = new Payment();
+		payment.setBookid(bookId);
+		payment.setMailId(mailId);
+		payment.setUsername(userName);
+		payment.setPaymentid(uuid.toString());
+		payment.setPayment_date(LocalDateTime.now());
+		return paymentRepository.save(payment);
+	}
+	
+	public Payment getPurchasedBooksForReader(String paymentId) {
+		return paymentRepository.getPurchasedBook(paymentId);
 	}
 
 }

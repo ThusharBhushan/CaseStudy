@@ -26,6 +26,8 @@ export class AuthService {
     // localStorage.setItem('isLoggedIn','false');
     localStorage.removeItem('isLoggedIn'); 
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('currentUserId');
     this.route.navigate(['/home']);  
   }
   

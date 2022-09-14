@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   isBookListAvailable: boolean = false;
+  buyBookForReader: boolean = false;
+  paymentId : String ='';
   bookList: any[] = [];
   book = {
     id: NaN,
@@ -17,11 +19,16 @@ export class HomeComponent implements OnInit {
     author: '',
     publisher: ''
   }
+  reader ={
+    username :'',
+    email :'',
+    bookId:NaN
+  }
   constructor(public bookService: BookserviceService, public route: Router) { }
 
   ngOnInit(): void {
     this.isBookListAvailable = false;
-    this.bookList=[];
+    this.bookList = [];
   }
 
   searchBook(book: any) {
@@ -32,7 +39,7 @@ export class HomeComponent implements OnInit {
       console.log(this.bookList);
       if (this.bookList != null) {
         this.isBookListAvailable = true;
-      }else{
+      } else {
         alert("No Books Found");
       }
     },
@@ -41,6 +48,26 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
+  buyBook(selectedBook: any) {
+    this.buyBookForReader = true;
+    console.log(selectedBook.id);
+    this.reader.bookId=selectedBook.id;
+  }
+
+  onBuy(reader:any){
+    const observable = this.bookService.buyBook(reader);
+    observable.subscribe((response: any) => {
+      console.log(response);
+      this.paymentId = response.paymentid;
+      this.buyBookForReader=false;
+    },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+
 
 
 }

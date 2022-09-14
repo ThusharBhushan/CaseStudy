@@ -1,12 +1,11 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-lg-3 col-md-2"></div>
-        <div class="col-lg-6 col-md-8 login-box">
-
+        <div class="col-lg-6 col-md-12 login-box">
             <div class="col-lg-12 login-title">SIGN UP</div>
             <div class="col-lg-12 login-form">
                 <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-                    <div class="form-group">
+                    <!-- <div class="form-group"> -->
                         <label class="form-control-label" for="username">Username</label>
                         <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required
                             minlength="3" maxlength="20" #username="ngModel" />
@@ -19,8 +18,8 @@
                                 Username must be at most 20 characters
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
+                    <!-- </div> -->
+                    <!-- <div class="form-group"> -->
                         <label class="form-control-label" for="email">Email</label>
                         <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email
                             #email="ngModel" />
@@ -30,8 +29,8 @@
                                 Email must be a valid email address
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
+                    <!-- </div> -->
+                    <!-- <div class="form-group"> -->
                         <label class="form-control-label" for="password">Password</label>
                         <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
                             minlength="6" #password="ngModel" />
@@ -41,20 +40,19 @@
                                 Password must be at least 6 characters
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
+                    <!-- </div> -->
+                    <!-- <div class="form-group"> -->
                         <label class="form-control-label" for="userrole">Role </label>
                         <!-- <input type="text" class="form-control" name="active" [(ngModel)]='book.active'> -->
                         <select [(ngModel)]="form.userrole" name="role" class="form-control" #userrole="ngModel">
                             <option *ngFor="let roles of roleList">{{roles}}</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-6 login-btm login-button">
+                    <!-- </div> -->
+                    <!-- <div class="form-group"> -->
+                        <div class="login-btm login-button">
                             <button class="btn btn-outline-primary">Sign Up</button>
                         </div>
-                    </div>
-
+                    <!-- </div> -->
                 </form>
                 <div class="col-lg-12 loginbttm">
                     <div class="form-group">
@@ -65,9 +63,9 @@
                 </div>
 
                 <div class="alert alert-success" role="alert" *ngIf="isSuccessful">
-                    
-                        Your registration is successful!,Please click login to proceed.
-                  
+
+                    Your registration is successful!,Please click login to proceed.
+
                 </div>
             </div>
 
