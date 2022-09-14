@@ -1,26 +1,38 @@
-<div id="searchBookContainer" *ngIf="!isBookListAvailable" class="col-md-12  searchbook">
+<div id="searchBookContainer" *ngIf="searchBookComponent" class="col-md-12  searchbook">
     <div class="row">
         <div class="col-lg-3 col-md-2"></div>
         <div class="col-lg-6 col-md-8 login-box">
             <div class="col-lg-12 login-title">Search Books</div>
             <div class="col-lg-12 login-form">
+                <form name="form" (ngSubmit)="f.form.valid && searchBook()" #f="ngForm" novalidate>
                 <div class="form-group">
                     <label class="form-control-label" for="category">Category </label>
-                    <input type="text" class="form-control" name="category" [(ngModel)]='book.category'>
+                    <input type="text" class="form-control" name="category" [(ngModel)]='book.category' required #category="ngModel">
+                    <div class="alert alert-danger" *ngIf="f.submitted &&category.errors?.['required']">Category
+                        is
+                        required</div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="publisher">Publisher </label>
-                    <input type="text" class="form-control" name="publisher" [(ngModel)]='book.publisher'>
+                    <input type="text" class="form-control" name="publisher" [(ngModel)]='book.publisher' required #publisher="ngModel">
+                    <div class="alert alert-danger" *ngIf="f.submitted &&publisher.errors?.['required']">Publisher
+                        name is
+                        required</div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="author">Author</label>
-                    <input type="text" class="form-control" name="author" [(ngModel)]='book.author'>
+                    <input type="text" class="form-control" name="author" [(ngModel)]='book.author' required #author="ngModel">
+                    <div class="alert alert-danger" *ngIf="f.submitted &&author.errors?.['required']">Author
+                        name is
+                        required</div>
+
                 </div>
                 <div class="form-group">
                     <div class="col-lg-6 login-btm login-button">
-                        <button (click)='searchBook(book)' class="btn btn-outline-primary">Search</button>
+                        <button class="btn btn-outline-primary">Search</button>
                     </div>
                 </div>
+            </form>
             </div>
         </div>
     </div>
@@ -50,16 +62,16 @@
 </div>
 
 
-<div id="searchBookContainer" *ngIf="isBookListAvailable && buyBookForReader" class="col-md-12  searchbook">
+<div id="searchBookContainer" *ngIf="buyBookForReader" class="col-md-12  searchbook">
     <div class="row">
         <div class="col-lg-3 col-md-2"></div>
         <div class="col-lg-6 col-md-8 login-box">
             <div class="col-lg-12 login-title">Buy Book</div>
             <div class="col-lg-12 login-form">
                 <!-- <div class="form-group"> -->
-                <form name="form" (ngSubmit)="f.form.valid && onBuy(reader)" #f="ngForm" novalidate>
+                <form name="form" (ngSubmit)="f.form.valid && onBuy()" #f="ngForm" novalidate>
                     <label class="form-control-label" for="username">Username</label>
-                    <input type="text" class="form-control" name="username" [(ngModel)]="reader.username" required
+                    <input type="text" class="form-control" name="username" [(ngModel)]="reader.userName" required
                         minlength="3" maxlength="20" #username="ngModel" />
                     <div class="alert alert-danger" *ngIf="username.errors && f.submitted">
                         <div *ngIf="username.errors?.['required']">Username is required</div>
@@ -73,7 +85,7 @@
                     <!-- </div> -->
                     <!-- <div class="form-group"> -->
                     <label class="form-control-label" for="email">Email</label>
-                    <input type="email" class="form-control" name="email" [(ngModel)]="reader.email" required email
+                    <input type="email" class="form-control" name="email" [(ngModel)]="reader.mailId" required email
                         #email="ngModel" />
                     <div class="alert alert-danger" *ngIf="email.errors  && f.submitted">
                         <div *ngIf="email.errors?.['required']">Email is required</div>
@@ -86,10 +98,19 @@
                     </div>
                     <!-- </div> -->
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <div class="alert alert-success" role="alert" *ngIf="!buyBookForReader">
-                    Your purchase is successful!,Please find the payment Id of your purchase {{paymentId}}
-                </div>
+<div role="alert" *ngIf="isPurchaseMessage">
+    <div class="row">
+        <div class="col-lg-3 col-md-2"></div>
+        <div class="col-lg-6 col-md-8 login-box">
+            <div class="form-control-label-message">
+                <p>Your purchase is successful!,Please find the payment Id of your purchase</p> {{paymentId}}
+                <p>Please Click<button (click)='searchMoreBook()' class="btn btn-outline-primary"> Search Book
+                    </button> to search a new book</p>
             </div>
         </div>
     </div>

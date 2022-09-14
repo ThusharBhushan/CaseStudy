@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
@@ -18,8 +19,10 @@ public class Payment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank(message = "Username must not be empty")
 	private String username;
-	private String mailId;
+	@NotBlank(message = "MailId must not be empty")
+	private String mailid;
 	private String paymentid;
 	private Long bookid;
 	private LocalDateTime payment_date;

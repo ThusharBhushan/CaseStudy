@@ -1,17 +1,27 @@
 <div id="app">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
         <a href="#" class="navbar-brand">Digital Books</a>
+        <ul class="navbar-nav">
+            <li  *ngIf="!isLoggedIn()">
+                <!-- <a href="/home" class="nav-link" routerLink="home">Home</a>
+             -->
+             <button class="nav-link btn btn-outline-primary" mat-button (click)="home()">Home</button>
+            </li>
+        </ul>
         <!-- <ul class="navbar-nav mr-auto" routerLinkActive="active">
         <li class="nav-item">
           <a href="/createBook" class="nav-link" routerLink="/createbook">CreateBook</a>
         </li>
       </ul> -->
+      
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" *ngIf="!isLoggedIn()">
-                <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+                <!-- <a href="/register" class="nav-link" routerLink="register">Sign Up</a> -->
+                <button class="nav-link btn btn-outline-primary" mat-button (click)="signUp()">Sign Up</button>
             </li>
             <li class="nav-item" *ngIf="!isLoggedIn()">
-                <a href="/login" class="nav-link" routerLink="login">Login</a>
+                <!-- <a href="/login" class="nav-link" routerLink="login">Login</a> -->
+                <button class="nav-link btn btn-outline-primary" mat-button (click)="logIn()">Login</button>
             </li>
             <li class="nav-item" *ngIf="isLoggedIn()">
                 <i class="nav-link">Welcome {{isLoggedInUserName()}} </i>
@@ -22,9 +32,10 @@
             <li class="nav-item" *ngIf="isLoggedIn()">
                 <button class="nav-link btn btn-outline-primary" mat-button (click)="getAllBook()">AllMyBooks</button>
             </li>
-            
-            
+
+
         </ul>
+  
 
     </nav>
 </div>

@@ -40,7 +40,7 @@ export class BookserviceService {
 
   buyBook(reader: any) {
     // /payment/book/{bookId}/username/{username}/mailId/{mailId}
-    let appendedURL = URL + "/payment/book/" + reader.bookId + "/username/" + reader.username + "/mailId/" + reader.mailId;
+    let appendedURL = URL + "/payment/book/" + reader.bookId + "/username/" + reader.userName + "/mailId/" + reader.mailId;
     return this.http.post(appendedURL,reader);
 
   }

@@ -11,7 +11,9 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   isBookListAvailable: boolean = false;
   buyBookForReader: boolean = false;
-  paymentId : String ='';
+  isPurchaseMessage: boolean = false;
+  searchBookComponent: boolean = false;
+  paymentId: String = '';
   bookList: any[] = [];
   book = {
     id: NaN,
@@ -19,26 +21,30 @@ export class HomeComponent implements OnInit {
     author: '',
     publisher: ''
   }
-  reader ={
-    username :'',
-    email :'',
-    bookId:NaN
+  reader = {
+    userName: '',
+    mailId: '',
+    bookId: NaN
   }
-  constructor(public bookService: BookserviceService, public route: Router) { }
+  constructor(public bookService: BookserviceService, public route: Router) {
+    // this.route.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnInit(): void {
     this.isBookListAvailable = false;
+    this.searchBookComponent = true;
     this.bookList = [];
   }
 
-  searchBook(book: any) {
-    const observable = this.bookService.searchBook(book);
+  searchBook() {
+    const observable = this.bookService.searchBook(this.book);
     observable.subscribe((response: any) => {
       console.log(response);
       this.bookList = response;
       console.log(this.bookList);
       if (this.bookList != null) {
         this.isBookListAvailable = true;
+        this.searchBookComponent =false;
       } else {
         alert("No Books Found");
       }
@@ -50,22 +56,33 @@ export class HomeComponent implements OnInit {
   }
 
   buyBook(selectedBook: any) {
+    this.isBookListAvailable = false;
     this.buyBookForReader = true;
     console.log(selectedBook.id);
-    this.reader.bookId=selectedBook.id;
+    this.reader.bookId = selectedBook.id;
+   
   }
 
-  onBuy(reader:any){
-    const observable = this.bookService.buyBook(reader);
+  onBuy() {
+    const observable = this.bookService.buyBook(this.reader);
     observable.subscribe((response: any) => {
       console.log(response);
       this.paymentId = response.paymentid;
-      this.buyBookForReader=false;
+      this.isPurchaseMessage = true;
+      this.buyBookForReader = false;
+      this.isBookListAvailable = false;
+      this.searchBookComponent=false;
     },
       (error: any) => {
         console.log(error);
       }
     );
+  }
+
+  searchMoreBook() {
+    this.isBookListAvailable = false;
+    location.reload();
+    // this.route.navigate(["/home"],{skipLocationChange: true});
   }
 
 

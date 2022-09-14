@@ -77,3 +77,10 @@ body {
     font-weight: bold;
     color: #ECF0F5;
 }
+.footer-text {
+    font-size: 15px;
+    padding-left: 40px;
+    text-align: center;
+    color: rgb(8, 8, 8);
+    word-spacing: 8px;
+}

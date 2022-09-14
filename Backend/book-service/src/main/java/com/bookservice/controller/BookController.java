@@ -59,9 +59,9 @@ public class BookController extends BaseController {
 	}
 
 	@PostMapping("/payment/book/{bookId}/username/{username}/mailId/{mailId}")
-	ResponseEntity<?> doPaymentForBook(@Valid @PathVariable("bookId") Long bookId, @PathVariable("bookId") String username,
+	ResponseEntity<?> doPaymentForBook(@Valid @PathVariable("bookId") Long bookId, @PathVariable("username") String userName,
 			@PathVariable("mailId") String mailId) {
-		Payment payment = bookService.doPayment(bookId,username,mailId);
+		Payment payment = bookService.doPayment(bookId,userName,mailId);
 		return new ResponseEntity<>(payment, HttpStatus.OK);
 	}
 

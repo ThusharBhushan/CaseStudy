@@ -23,12 +23,20 @@ export class HeaderComponent implements OnInit {
   isLoggedInUserName(){
     return localStorage.getItem('currentUser');
   }
-
+  signUp(){
+    this.route.navigate(["/register"]);
+  }
+  logIn(){
+    this.route.navigate(["/login"]);
+  }
   onLogout(){ 
     this.authService.logout();   
   } 
   getAllBook(){
     this.route.navigate(["/allbook"]);
+  }
+  home(){
+    location.reload();
   }
   
 

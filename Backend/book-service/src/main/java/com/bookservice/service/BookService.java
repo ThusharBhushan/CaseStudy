@@ -75,7 +75,7 @@ public class BookService {
 		UUID uuid=UUID.randomUUID();  
 		Payment payment = new Payment();
 		payment.setBookid(bookId);
-		payment.setMailId(mailId);
+		payment.setMailid(mailId);
 		payment.setUsername(userName);
 		payment.setPaymentid(uuid.toString());
 		payment.setPayment_date(LocalDateTime.now());

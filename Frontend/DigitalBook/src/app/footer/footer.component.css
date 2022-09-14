@@ -1,4 +1,16 @@
-.footer{
-    align-items: center;
-    text-decoration: solid;
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #030303;
+}
+
+.footer-text {
+    font-size: 15px;
+    padding-left: 40px;
+    text-align: center;
+    color: white;
+    word-spacing: 8px;
 }
