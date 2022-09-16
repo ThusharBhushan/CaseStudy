@@ -10,14 +10,22 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  constructor(public route :Router,public authService :AuthService) {}
+  constructor(public route :Router,public authService :AuthService) {
+
+  }
 
   ngOnInit(): void {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('currentUser');
+    this.isLoggedIn();
   }
   isLoggedIn(){
-    return localStorage.getItem('isLoggedIn');
+    console.log(localStorage.getItem('isLoggedIn'));
+    let logInStatus :string|null = localStorage.getItem('isLoggedIn');
+    if(logInStatus!=null){
+      if(logInStatus.includes('true')){
+           return true;
+      }  
+    }
+    return false;
   }
 
   isLoggedInUserName(){
@@ -36,7 +44,9 @@ export class HeaderComponent implements OnInit {
     this.route.navigate(["/allbook"]);
   }
   home(){
-    location.reload();
+    localStorage.clear;
+    this.route.navigate(['/home']);
+    // window.location.reload();
   }
   
 

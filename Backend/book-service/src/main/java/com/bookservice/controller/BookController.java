@@ -43,22 +43,27 @@ public class BookController extends BaseController {
 	@Autowired
 	UserRepository userRepository;
 
-	@GetMapping("/allbooks/{authorId}")
+	@GetMapping("allbooks/{authorId}")
 	Iterable<Book> getAllBooks(@Valid @PathVariable("authorId") Long id) {
 		return bookService.getAllBooks(id);
 	}
+	
+	@GetMapping("reader/{bookId}/payment/{paymentId}")
+	Book getReaderBooks(@Valid @PathVariable("bookId") Long bookId, @PathVariable("paymentId") String paymentId) {
+		return bookService.getReaderBooks(bookId,paymentId);
+	}
 
-	@GetMapping("/reader/allbooks")
+	@GetMapping("reader/allbooks")
 	Iterable<Book> getAllBooksForReader() {
 		return bookService.getAllBooksForReader();
 	}
 	
-	@GetMapping("/reader/payment/{paymentId}")
+	@GetMapping("reader/payment/{paymentId}")
 	Payment getPurchasedBooksForReader(@Valid @PathVariable("paymentId") String paymentId) {
 		return bookService.getPurchasedBooksForReader(paymentId);
 	}
 
-	@PostMapping("/payment/book/{bookId}/username/{username}/mailId/{mailId}")
+	@PostMapping("payment/book/{bookId}/username/{username}/mailId/{mailId}")
 	ResponseEntity<?> doPaymentForBook(@Valid @PathVariable("bookId") Long bookId, @PathVariable("username") String userName,
 			@PathVariable("mailId") String mailId) {
 		Payment payment = bookService.doPayment(bookId,userName,mailId);
@@ -93,7 +98,7 @@ public class BookController extends BaseController {
 
 	}
 
-	@GetMapping("/books/search")
+	@GetMapping("author/books/search")
 	@ResponseBody
 	public ResponseEntity<?> searchBook(@RequestParam(required = false) String category,
 			@RequestParam(required = false) String author, @RequestParam(required = false) BigDecimal price,

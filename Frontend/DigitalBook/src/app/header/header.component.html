@@ -1,6 +1,6 @@
 <div id="app">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <a href="#" class="navbar-brand">Digital Books</a>
+        <a class="navbar-brand">Digital Books</a>
         <ul class="navbar-nav">
             <li  *ngIf="!isLoggedIn()">
                 <!-- <a href="/home" class="nav-link" routerLink="home">Home</a>
@@ -27,15 +27,15 @@
                 <i class="nav-link">Welcome {{isLoggedInUserName()}} </i>
             </li>
             <li class="nav-item" *ngIf="isLoggedIn()">
-                <button class="nav-link btn btn-outline-primary" mat-button (click)="onLogout()">Logout</button>
+                <a class="nav-link btn btn-outline-primary" (click)="onLogout()">Logout</a>
             </li>
             <li class="nav-item" *ngIf="isLoggedIn()">
-                <button class="nav-link btn btn-outline-primary" mat-button (click)="getAllBook()">AllMyBooks</button>
+                <a class="nav-link btn btn-outline-primary" (click)="getAllBook()">All My Books</a>
             </li>
-
-
+        
         </ul>
-  
-
+         
+                
+        
     </nav>
 </div>

@@ -27,15 +27,18 @@ export class HomeComponent implements OnInit {
     bookId: NaN
   }
   constructor(public bookService: BookserviceService, public route: Router) {
-    // this.route.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.route.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit(): void {
     this.isBookListAvailable = false;
     this.searchBookComponent = true;
     this.bookList = [];
+    document.body.classList.add('bg-img')
   }
+  search(){
 
+  }
   searchBook() {
     const observable = this.bookService.searchBook(this.book);
     observable.subscribe((response: any) => {
@@ -81,8 +84,13 @@ export class HomeComponent implements OnInit {
 
   searchMoreBook() {
     this.isBookListAvailable = false;
-    location.reload();
+    this.route.navigate(['/register']);
+    // location.reload();
     // this.route.navigate(["/home"],{skipLocationChange: true});
+  }
+
+  ngOnDestroy(){
+    document.body.classList.remove('bg-img')
   }
 
 

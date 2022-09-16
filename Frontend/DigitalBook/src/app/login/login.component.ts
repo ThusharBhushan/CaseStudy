@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(public authService: AuthService, public route: Router) { }
 
   ngOnInit(): void {
+    // document.body.classList.add('bg-img')
   }
 
 
@@ -42,14 +44,25 @@ export class LoginComponent implements OnInit {
         }
       },
       (err: any) => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = err.error;
         console.log('Error :' + this.errorMessage);
         this.isLoginFailed = true;
+        this.isLoggedIn = false;
         localStorage.setItem('isLoggedIn', 'false');
         localStorage.removeItem('currentUser');
         localStorage.removeItem('currentUserId');
       }
     );
 
+  }
+
+  isLoggedInUserName(){
+    return localStorage.getItem('currentUser');
+  }
+  onLogout(){ 
+    this.authService.logout();   
+  }
+  getAllBook(){
+    this.route.navigate(["/allbook"]);
   }
 }

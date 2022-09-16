@@ -85,5 +85,9 @@ public class BookService {
 	public Payment getPurchasedBooksForReader(String paymentId) {
 		return paymentRepository.getPurchasedBook(paymentId);
 	}
+	
+	public Book getReaderBooks(Long bookId,String paymentId){
+		return bookRepository.findBookForReader(bookId,paymentId);
+	}
 
 }

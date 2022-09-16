@@ -3,6 +3,11 @@ import { Injectable } from '@angular/core';
 
 
 const URL = "http://localhost:8083/api/v1/digitalbooks";
+
+// const URL = "http://35.161.218.84:8083/api/v1/digitalbooks";
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +22,7 @@ export class BookserviceService {
   }
 
   searchBook(book: any) {
-    let appendedURL = URL + "/books/search"
+    let appendedURL = URL + "author/books/search"
     let queryParams = new HttpParams();
     queryParams = queryParams.append("category", book.category);
     queryParams = queryParams.append("author", book.author);
@@ -48,6 +53,12 @@ export class BookserviceService {
   searchBookForReader(searchBookReaderPaymentId:String){
     // "/reader/payment/{paymentId}"
     let appendedURL = URL + "/reader/payment/" + searchBookReaderPaymentId;
+    return this.http.get(appendedURL);
+  }
+
+  viewBook(bookId:any,paymentId:any){
+    // "reader/{bookId}/payment/{paymentId}
+    let appendedURL = URL + "/reader/" + bookId +"/payment/" + paymentId;
     return this.http.get(appendedURL);
   }
 }

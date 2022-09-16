@@ -8,7 +8,11 @@ import { BookserviceService } from '../bookservice.service';
 })
 export class AllmybookComponent implements OnInit {
   bookList: any[] = [];
-  readerPurchasedBooks: any[] = [];
+  readerPurchasedBooks = {
+    bookId :NaN,
+    paymentid: '',
+    payment_date: null
+  }
   isBookListAvailable: boolean = false;
   isReaderBookListAvailable: boolean = false;
   noBookFoundMessage: String = '';
@@ -48,18 +52,31 @@ export class AllmybookComponent implements OnInit {
     );
   }
 
-  searchBookForReader(searchBookReaderPaymentId: String) {
-    const observable = this.bookService.searchBookForReader(searchBookReaderPaymentId);
+  searchBookForReader() {
+    const observable = this.bookService.searchBookForReader(this.searchBookReaderPaymentId);
     observable.subscribe((response: any) => {
       console.log(response);
-      this.readerPurchasedBooks = response;
+      this.readerPurchasedBooks.paymentid = response.paymentid;
+      this.readerPurchasedBooks.payment_date=response.payment_date;
+      this.readerPurchasedBooks.bookId=response.bookid;
       console.log(this.readerPurchasedBooks);
       if (this.readerPurchasedBooks != null) {
         this.isReaderBookListAvailable = true;
-        this.readerRole=false;
+        this.readerRole = false;
       } else {
         this.noBookFoundMessage = "No Books Found";
       }
+    },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+
+  viewBook(bookId :any,paymentId:any){
+    const observable = this.bookService.viewBook(bookId,paymentId);
+    observable.subscribe((response: any) => {
+      console.log(response);
     },
       (error: any) => {
         console.log(error);

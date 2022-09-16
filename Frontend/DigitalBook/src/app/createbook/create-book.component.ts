@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookserviceService } from '../bookservice.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'createbook',
@@ -9,7 +10,8 @@ import { BookserviceService } from '../bookservice.service';
 })
 export class CreateBookComponent implements OnInit {
 
-  statusList: any = ['Active', 'Inactive'];
+  statusList: any = ['ACTIVE', 'INACTIVE'];
+  categoryList: any = ['HORROR', 'COMEDY','DRAMA'];
   book = {
     title: '',
     category: '',

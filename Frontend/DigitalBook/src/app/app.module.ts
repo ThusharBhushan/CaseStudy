@@ -33,7 +33,7 @@ import { AllmybookComponent } from './allmybook/allmybook.component';
     BrowserModule,
     AppRoutingModule,HttpClientModule,FormsModule
   ],
-  providers: [],
+  providers: [HeaderComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,4 @@
-div  {
-    background: #222D32;
-}
+
 .form-group {
     margin-bottom: 40px;
     outline: 0px;
@@ -65,7 +63,7 @@ body {
 }
 .login-box {
     margin-top: 75px;
-    height: auto;
+    height: 200px;
     background: #1A2226;
     text-align: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,32 +32,35 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepo;
-	
-	
+
+	@GetMapping
+	String getUser() {
+		return "test";
+	}
 
 	@PostMapping("/login")
 	ResponseEntity login(@Valid @RequestBody LoginRequestDto user) {
-		Base64.Decoder decoder = Base64.getMimeDecoder();  
+		Base64.Decoder decoder = Base64.getMimeDecoder();
 		if (userRepo.existsByusername(user.getUsername())) {
 			User existingUser = userRepo.getUser(user.getUsername());
-			String decodedPwd = new String (decoder.decode(existingUser.getPassword()));
+			String decodedPwd = new String(decoder.decode(existingUser.getPassword()));
 			if (decodedPwd.equals(user.getPassword())) {
-				return new ResponseEntity(existingUser,HttpStatus.OK);
-			}else {
-				return new ResponseEntity<>("Password is wrong",HttpStatus.OK);
+				return new ResponseEntity(existingUser, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>("Password is wrong", HttpStatus.UNAUTHORIZED);
 			}
 		}
-		return new ResponseEntity("UserName is wrong",HttpStatus.OK);
+		return new ResponseEntity("No user is available with the name", HttpStatus.UNAUTHORIZED);
 	}
 
 	@PostMapping("/signup")
 	ResponseEntity createAuthorAccount(@Valid @RequestBody User user) {
-		 Base64.Encoder encoder = Base64.getMimeEncoder();  
+		Base64.Encoder encoder = Base64.getMimeEncoder();
 		if (userRepo.existsByemail(user.getEmail())) {
-			return new ResponseEntity("Email exist already!Please try with different mailid",HttpStatus.OK);
+			return new ResponseEntity("Email exist already!Please try with different mailid", HttpStatus.OK);
 		}
 		if (userRepo.existsByusername(user.getUsername())) {
-			return new ResponseEntity("UserName exist already!Please try with different username",HttpStatus.OK);
+			return new ResponseEntity("UserName exist already!Please try with different username", HttpStatus.OK);
 		}
 		user.setPassword(encoder.encodeToString(user.getPassword().getBytes()));
 		userService.createAuthor(user);

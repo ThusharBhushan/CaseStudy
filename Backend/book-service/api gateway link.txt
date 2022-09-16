@@ -1,0 +1,17 @@
+java -jar book-service-0.0.1-SNAPSHOT  --spring.profiles.active=prod
+
+http://35.161.218.84:8083/api/v1/digitalbooks/author
+
+ https://bn6p12jexi.execute-api.us-west-2.amazonaws.com/prod --usercontroller signup
+
+ https://bn6p12jexi.execute-api.us-west-2.amazonaws.com/prod/-  -- bookcontroller
+
+MIYWvTg3Ksa8mszsMp2Qc6iV59jtuUaW3NzvbelZ casestudy-api
+
+curl --location -X POST "https://bn6p12jexi.execute-api.us-west-2.amazonaws.com/prod" --header "Content-Type: application/json" --data-raw "{
+"username" : "Elon",
+ "password" : "123",
+ "email" :"Elon@gmail.com",
+ "gender" :"male",
+ "userrole" :"Author"
+}"

@@ -21,8 +21,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	@Query(value = "select * from book b where  b.publisher=:publisher", nativeQuery = true)
 	Set<Book> searchBookByPublisher(@Param("publisher") String publisher);
-	
+
 	@Query(value = "select * from book b where b.userid=:id", nativeQuery = true)
 	Iterable<Book> findBooksByUserId(@Param("id") Long id);
+
+	@Query(value = "select b.* from `casestudy`.`payment` as  p join `casestudy`.`book`as b on p.bookid=b.id"
+			+ " where b.id=:bookId and p.paymentid=:paymentId", nativeQuery = true)
+	Book findBookForReader(@Param("bookId") Long bookId, @Param("paymentId") String paymentId);
 
 }

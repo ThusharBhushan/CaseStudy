@@ -11,7 +11,6 @@
 	<groupId>com.bookservice</groupId>
 	<artifactId>book-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<name>book-service</name>
 	<description>HnT Book Service</description>
 	<properties>
