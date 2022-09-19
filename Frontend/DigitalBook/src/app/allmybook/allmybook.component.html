@@ -14,6 +14,7 @@
                         <td>{{b.title}}</td>
                         <td>{{b.author}}</td>
                         <td>{{b.price}}</td>
+                        <!-- <button class='btn btn-outline-primary' (click)='()'>Edit</button> -->
                     </tr>
                 </tbody>
             </table>
@@ -38,7 +39,7 @@
                     <tr>
                         <td>{{readerPurchasedBooks.paymentid}}</td>
                         <td>{{readerPurchasedBooks.payment_date | date}}</td>
-                        <button class='btn btn-outline-primary' (click)='viewBook(readerPurchasedBooks.bookId,readerPurchasedBooks.paymentid)'>Buy</button>
+                        <button class='btn btn-outline-primary' (click)='viewBook(readerPurchasedBooks.bookId,readerPurchasedBooks.paymentid)'>View</button>
                     </tr>
                 </tbody>
             </table>

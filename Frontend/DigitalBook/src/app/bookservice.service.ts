@@ -2,11 +2,8 @@ import { HttpClient, HttpClientModule, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
-const URL = "http://localhost:8083/api/v1/digitalbooks";
-
-// const URL = "http://35.161.218.84:8083/api/v1/digitalbooks";
-
-
+// const URL = "http://localhost:8083/api/v1/digitalbooks/";
+const URL ="https://bn6p12jexi.execute-api.us-west-2.amazonaws.com/prod/";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +13,8 @@ export class BookserviceService {
   baseApiUrl = "https://file.io";
   constructor(public http: HttpClient) { }
   createBook(book: any) {
-    let appendedURL = URL + "/author/" + book.userid + "/books"
+    // https://bn6p12jexi.execute-api.us-west-2.amazonaws.com/prod/{proxy+}author/{authorId}/books
+    let appendedURL = URL+"author/"+book.userid+"/books" ;
     return this.http.post(appendedURL, book);
 
   }
@@ -27,7 +25,7 @@ export class BookserviceService {
     queryParams = queryParams.append("category", book.category);
     queryParams = queryParams.append("author", book.author);
     queryParams = queryParams.append("publisher", book.publisher)
-    return this.http.get(appendedURL, { params: queryParams });
+    return this.http.get(URL, { params: queryParams });
 
   }
 
@@ -44,7 +42,7 @@ export class BookserviceService {
   }
 
   buyBook(reader: any) {
-    // /payment/book/{bookId}/username/{username}/mailId/{mailId}
+    // payment/book/{bookId}/username/{username}/mailId/{mailId}
     let appendedURL = URL + "/payment/book/" + reader.bookId + "/username/" + reader.userName + "/mailId/" + reader.mailId;
     return this.http.post(appendedURL,reader);
 
@@ -60,5 +58,11 @@ export class BookserviceService {
     // "reader/{bookId}/payment/{paymentId}
     let appendedURL = URL + "/reader/" + bookId +"/payment/" + paymentId;
     return this.http.get(appendedURL);
+  }
+
+  editBook(authorId:any,bookId:any){
+    // author/{authorId}/books/{bookId}
+    let appendedURL = URL + "author/" + authorId +"/books/" + bookId;
+    return this.http.put(appendedURL,'');
   }
 }

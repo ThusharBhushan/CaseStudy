@@ -15,3 +15,5 @@ curl --location -X POST "https://bn6p12jexi.execute-api.us-west-2.amazonaws.com/
  "gender" :"male",
  "userrole" :"Author"
 }"
+
+http://35.90.247.159:8083/api/v1/digitalbooks/payment/book/{bookId}/username/{username}/mailId/{mailId}

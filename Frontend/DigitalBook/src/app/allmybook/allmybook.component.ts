@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookserviceService } from '../bookservice.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-allmybook',
@@ -9,7 +10,7 @@ import { BookserviceService } from '../bookservice.service';
 export class AllmybookComponent implements OnInit {
   bookList: any[] = [];
   readerPurchasedBooks = {
-    bookId :NaN,
+    bookId: NaN,
     paymentid: '',
     payment_date: null
   }
@@ -19,8 +20,9 @@ export class AllmybookComponent implements OnInit {
   authorRole: boolean = false;
   readerRole: boolean = false;
   searchBookReaderPaymentId: String = '';
+  dialogValue:String="";
 
-  constructor(public bookService: BookserviceService) { }
+  constructor(public bookService: BookserviceService,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     console.log(localStorage.getItem('userRole'));
@@ -57,8 +59,8 @@ export class AllmybookComponent implements OnInit {
     observable.subscribe((response: any) => {
       console.log(response);
       this.readerPurchasedBooks.paymentid = response.paymentid;
-      this.readerPurchasedBooks.payment_date=response.payment_date;
-      this.readerPurchasedBooks.bookId=response.bookid;
+      this.readerPurchasedBooks.payment_date = response.payment_date;
+      this.readerPurchasedBooks.bookId = response.bookid;
       console.log(this.readerPurchasedBooks);
       if (this.readerPurchasedBooks != null) {
         this.isReaderBookListAvailable = true;
@@ -73,8 +75,32 @@ export class AllmybookComponent implements OnInit {
     );
   }
 
-  viewBook(bookId :any,paymentId:any){
-    const observable = this.bookService.viewBook(bookId,paymentId);
+  viewBook(bookId: any, paymentId: any) {
+    const observable = this.bookService.viewBook(bookId, paymentId);
+    observable.subscribe((response: any) => {
+      console.log(response);
+    },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+  // openDialog() {
+  //     const dialogRef = this.dialog.open(UpdateBookComponent, {
+  //       width: '250px',
+  //       backdropClass: 'custom-dialog-backdrop-class',
+  //       panelClass: 'custom-dialog-panel-class',
+  //       disableClose:true,
+  //       data: { pageValue: this.bookList }
+  //     });
+  
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       console.log('The dialog was closed', result);
+  //       this.dialogValue = result.data;
+  //     });
+  // }
+  updateBook(authorId: any, bookId: any) {
+    const observable = this.bookService.editBook(authorId, bookId);
     observable.subscribe((response: any) => {
       console.log(response);
     },

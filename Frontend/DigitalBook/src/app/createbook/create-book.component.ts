@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookserviceService } from '../bookservice.service';
-import { HeaderComponent } from '../header/header.component';
+
 
 @Component({
   selector: 'createbook',
@@ -11,7 +11,7 @@ import { HeaderComponent } from '../header/header.component';
 export class CreateBookComponent implements OnInit {
 
   statusList: any = ['ACTIVE', 'INACTIVE'];
-  categoryList: any = ['HORROR', 'COMEDY','DRAMA'];
+  categoryList: any = ['HORROR', 'COMEDY', 'DRAMA'];
   book = {
     title: '',
     category: '',
@@ -25,9 +25,13 @@ export class CreateBookComponent implements OnInit {
     content: ''
   }
   shortLink: string = "";
-  selectedFile = null;
+  selectedFile = File;
   bookCreatedMessage: String = '';
   isBookCreated: boolean = false;
+  errorMessage: string = '';
+  isErrorMessage: boolean = false;
+  fileUploadMessage: string = '';
+  isFileUploadMessage: boolean = false;
   constructor(public bookservice: BookserviceService, public route: Router) {
     // this.route.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -48,7 +52,7 @@ export class CreateBookComponent implements OnInit {
     observable.subscribe((responseBody: any) => {
       console.log(responseBody);
       if (responseBody.id != null) {
-        this.bookCreatedMessage = 'Book Created Successfully';
+        this.bookCreatedMessage = 'Book Created Successfully!';
         this.isBookCreated = true;
         console.log(this.bookCreatedMessage);
       }
@@ -56,13 +60,33 @@ export class CreateBookComponent implements OnInit {
     },
       (error: any) => {
         console.log(error);
+        this.isErrorMessage = true;
+        this.errorMessage = error.error.text;
       }
     );
   }
 
   onFileUpload(event: any) {
     this.selectedFile = event.target.files[0];
+    this.isFileUploadMessage = false;
+    this.fileUploadMessage = "";
+    if (!this.validateFile(this.selectedFile.name)) {
+      console.log('Selected file format is not supported');
+      this.isFileUploadMessage = true;
+      this.fileUploadMessage = "Please select jpg/jpeg files";
+    }
   }
+
+  validateFile(name: any) {
+    var ext = name.substring(name.lastIndexOf('.') + 1);
+    if (ext.toLowerCase() == 'jpg' || ext.toLowerCase() == 'jpeg') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   onUpload() {
     console.log(this.selectedFile);
     this.bookservice.upload(this.selectedFile).subscribe(
