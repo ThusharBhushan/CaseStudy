@@ -56,7 +56,7 @@ export class BookserviceService {
     queryParams = queryParams.append("category", book.category);
     queryParams = queryParams.append("author", book.author);
     queryParams = queryParams.append("publisher", book.publisher)
-    return this.http.get(URL, { params: queryParams });
+    return this.http.get(appendedURL, { params: queryParams });
 
   }
 

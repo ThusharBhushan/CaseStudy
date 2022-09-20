@@ -86,7 +86,7 @@ public class BookController extends BaseController {
 	public ResponseEntity<?> updateBook(@PathVariable("authorId") Long authorId, @PathVariable("bookId") Long bookId,
 			@RequestBody Book book) {
 
-		if (!bookRepository.existsById((long) authorId)) {
+		if (!userRepository.existsById((long) authorId)) {
 			return new ResponseEntity<>("Author does not exist", HttpStatus.UNAUTHORIZED);
 		}
 		book.setUserid(authorId);

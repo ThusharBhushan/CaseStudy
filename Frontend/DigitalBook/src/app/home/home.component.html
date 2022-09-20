@@ -1,4 +1,3 @@
-
 <div id="searchBookContainer " *ngIf="searchBookComponent" class="col-md-12 bg-img searchbook">
     <div class="row">
         <div class="col-lg-3 col-md-2"></div>
@@ -9,26 +8,35 @@
                     <div class="form-group">
                         <label class="form-control-label" for="category">Category </label>
                         <input type="text" class="form-control" name="category" [(ngModel)]='book.category' required
-                            #category="ngModel">
-                        <div class="alert alert-danger" *ngIf="f.submitted &&category.errors?.['required']">Category
-                            is
-                            required</div>
+                            pattern="\S(.*\S)?" #category="ngModel">
+                        <div class="alert alert-danger" role="alert" *ngIf="category.errors && f.submitted">
+                            <div class="alert alert-danger" *ngIf="category.errors?.['required']">Category
+                                is
+                                required</div>
+                            <div *ngIf="validateWhiteSpaceCategory()">Category is Empty!</div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="publisher">Publisher </label>
                         <input type="text" class="form-control" name="publisher" [(ngModel)]='book.publisher' required
-                            #publisher="ngModel">
-                        <div class="alert alert-danger" *ngIf="f.submitted &&publisher.errors?.['required']">Publisher
-                            name is
-                            required</div>
+                            pattern="\S(.*\S)?" #publisher="ngModel">
+                        <div class="alert alert-danger" role="alert" *ngIf="category.errors && f.submitted">
+                            <div class="alert alert-danger" *ngIf="publisher.errors?.['required']">Publisher
+                                name is
+                                required</div>
+                            <div *ngIf="validateWhiteSpacePublisher()">Publisher is Empty!</div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="author">Author</label>
                         <input type="text" class="form-control" name="author" [(ngModel)]='book.author' required
-                            #author="ngModel">
-                        <div class="alert alert-danger" *ngIf="f.submitted &&author.errors?.['required']">Author
-                            name is
-                            required</div>
+                            pattern="\S(.*\S)?" #author="ngModel">
+                        <div class="alert alert-danger" role="alert" *ngIf="category.errors && f.submitted">
+                            <div class="alert alert-danger" *ngIf="author.errors?.['required']">Author
+                                name is
+                                required</div>
+                            <div *ngIf="validateWhiteSpaceAuthor()">Author is Empty!</div>
+                        </div>
 
                     </div>
                     <div class="form-group">
@@ -38,6 +46,7 @@
                     </div>
                 </form>
             </div>
+            
         </div>
     </div>
 </div>

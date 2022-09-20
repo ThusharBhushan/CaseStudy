@@ -33,9 +33,9 @@ export class AllmybookComponent implements OnInit {
   authorRole: boolean = false;
   readerRole: boolean = false;
   searchBookReaderPaymentId: String = '';
-  dialogValue:String="";
+  dialogValue: String = "";
 
-  constructor(public bookService: BookserviceService,public route: Router) { }
+  constructor(public bookService: BookserviceService, public route: Router) { }
 
   ngOnInit(): void {
     console.log(localStorage.getItem('userRole'));
@@ -47,7 +47,12 @@ export class AllmybookComponent implements OnInit {
       this.readerRole = true;
     }
   }
-
+  validateWhiteSpace(): boolean {
+    if (this.searchBookReaderPaymentId.trim() == '') {
+      return true;
+    }
+    return false;
+  }
   getAllMyBooks() {
     console.log(localStorage.getItem('currentUserId'));
     const observable = this.bookService.getBook(localStorage.getItem('currentUserId'));
@@ -99,11 +104,11 @@ export class AllmybookComponent implements OnInit {
     );
   }
 
-  editBook(book:any){
+  editBook(book: any) {
     this.bookService.getEditBook(book);
     this.route.navigate(["/updatebook"]);
   }
- 
+
 
 
 }

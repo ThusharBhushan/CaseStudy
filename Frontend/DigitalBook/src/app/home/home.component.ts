@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   isPurchaseMessage: boolean = false;
   searchBookComponent: boolean = false;
   paymentId: String = '';
+  noBooksFoundMessage: String = '';
   bookList: any[] = [];
   book = {
     id: NaN,
@@ -30,13 +31,32 @@ export class HomeComponent implements OnInit {
     this.route.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
+  validateWhiteSpaceCategory(): boolean {
+    if (this.book.category.trim() == '') {
+      return true;
+    }
+    return false;
+  }
+  validateWhiteSpaceAuthor(): boolean {
+    if (this.book.author.trim() == '') {
+      return true;
+    }
+    return false;
+  }
+  validateWhiteSpacePublisher(): boolean {
+    if (this.book.publisher.trim() == '') {
+      return true;
+    }
+    return false;
+  }
+
   ngOnInit(): void {
     this.isBookListAvailable = false;
     this.searchBookComponent = true;
     this.bookList = [];
     document.body.classList.add('bg-img')
   }
-  search(){
+  search() {
 
   }
   searchBook() {
@@ -47,13 +67,14 @@ export class HomeComponent implements OnInit {
       console.log(this.bookList);
       if (this.bookList != null) {
         this.isBookListAvailable = true;
-        this.searchBookComponent =false;
+        this.searchBookComponent = false;
       } else {
         alert("No Books Found");
       }
     },
       (error: any) => {
         console.log(error);
+        alert("No Books Found");
       }
     );
   }
@@ -63,7 +84,7 @@ export class HomeComponent implements OnInit {
     this.buyBookForReader = true;
     console.log(selectedBook.id);
     this.reader.bookId = selectedBook.id;
-   
+
   }
 
   onBuy() {
@@ -74,7 +95,7 @@ export class HomeComponent implements OnInit {
       this.isPurchaseMessage = true;
       this.buyBookForReader = false;
       this.isBookListAvailable = false;
-      this.searchBookComponent=false;
+      this.searchBookComponent = false;
     },
       (error: any) => {
         console.log(error);
@@ -89,7 +110,7 @@ export class HomeComponent implements OnInit {
     // this.route.navigate(["/home"],{skipLocationChange: true});
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     document.body.classList.remove('bg-img')
   }
 

@@ -12,9 +12,12 @@
                     <div class="form-group">
                         <label class="form-control-label" for="username">Username</label>
                         <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required
-                            #username="ngModel" />
+                        pattern="\S(.*\S)?" #username="ngModel" />
                         <div class="alert alert-danger" role="alert" *ngIf="username.errors && f.submitted">
-                            Username is required!
+                            <div *ngIf="username.errors?.['required']">Username is required!</div>
+                            <div *ngIf="validateWhiteSpace()">Username is Empty!</div>
+                            <!-- <div *ngIf="username.errors.['pattern']">Username cannot contain whitespace!</div> -->
+
                         </div>
 
                     </div>

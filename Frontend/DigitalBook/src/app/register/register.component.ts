@@ -25,7 +25,14 @@ export class RegisterComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-
+  
+  validateWhiteSpace():boolean{
+    if(this.form.username.trim() == '')
+    {
+      return true ;
+    }
+    return false;
+  }
   onSubmit(): void {
     const { username, email, password,userrole } = this.form;
     const observable = this.authService.register(username, email, password,userrole);

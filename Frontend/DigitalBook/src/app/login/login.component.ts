@@ -22,10 +22,17 @@ export class LoginComponent implements OnInit {
     // document.body.classList.add('bg-img')
   }
 
-
+  validateWhiteSpace():boolean{
+  if(this.form.username.trim() == '')
+  {
+    return true ;
+  }
+  return false;
+}
 
   onSubmit(): void {
     const { username, password } = this.form;
+    
     const promise = this.authService.login(username, password);
     promise.subscribe(
       (responseBody: any) => {
@@ -44,7 +51,7 @@ export class LoginComponent implements OnInit {
         }
       },
       (err: any) => {
-        this.errorMessage = err.error;
+        this.errorMessage = err.error.text;
         console.log('Error :' + this.errorMessage);
         this.isLoginFailed = true;
         this.isLoggedIn = false;
