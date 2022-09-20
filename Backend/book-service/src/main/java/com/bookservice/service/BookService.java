@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,28 +23,23 @@ public class BookService {
 
 	@Autowired
 	BookRepository bookRepository;
-	
+
 	@Autowired
 	PaymentRepository paymentRepository;
 
 	@Autowired
 	UserRepository userRepository;
 
-	public Book updateBook(Long authorId, Long bookId, Book book) {
+	@Transactional
+	public Boolean updateBook(Long authorId, Long bookId, Book book) {
 		Optional<Book> bookToUpdate = bookRepository.findById((long) bookId);
 		if (bookToUpdate.isPresent()) {
-			Book updatedBook = bookToUpdate.get();
-			updatedBook.setTitle(book.getTitle());
-			updatedBook.setPublisher(book.getPublisher());
-			updatedBook.setPublished_date(book.getPublished_date());
-			updatedBook.setPrice(book.getPrice());
-			updatedBook.setContent(book.getContent());
-			updatedBook.setCategory(book.getCategory());
-			updatedBook.setAuthor(book.getAuthor());
-			return bookRepository.save(updatedBook);
+			bookRepository.bookToUpdate(authorId, bookId, book.getTitle(), book.getCategory().toString(), book.getPrice(),
+					book.getAuthor(), book.getPublished_date(), book.getActive().toString(), book.getContent(),
+					book.getPublisher());
+			return true;
 		}
-
-		return null;
+		return false;
 
 	}
 
@@ -67,12 +64,13 @@ public class BookService {
 	public Iterable<Book> getAllBooks(Long id) {
 		return bookRepository.findBooksByUserId(id);
 	}
-	
+
 	public Iterable<Book> getAllBooksForReader() {
 		return bookRepository.findAll();
 	}
-	public Payment doPayment(Long bookId,String userName,String mailId) {
-		UUID uuid=UUID.randomUUID();  
+
+	public Payment doPayment(Long bookId, String userName, String mailId) {
+		UUID uuid = UUID.randomUUID();
 		Payment payment = new Payment();
 		payment.setBookid(bookId);
 		payment.setMailid(mailId);
@@ -81,13 +79,13 @@ public class BookService {
 		payment.setPayment_date(LocalDateTime.now());
 		return paymentRepository.save(payment);
 	}
-	
+
 	public Payment getPurchasedBooksForReader(String paymentId) {
 		return paymentRepository.getPurchasedBook(paymentId);
 	}
-	
-	public Book getReaderBooks(Long bookId,String paymentId){
-		return bookRepository.findBookForReader(bookId,paymentId);
+
+	public Book getReaderBooks(Long bookId, String paymentId) {
+		return bookRepository.findBookForReader(bookId, paymentId);
 	}
 
 }

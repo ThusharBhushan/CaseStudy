@@ -90,8 +90,8 @@ public class BookController extends BaseController {
 			return new ResponseEntity<>("Author does not exist", HttpStatus.UNAUTHORIZED);
 		}
 		book.setUserid(authorId);
-		Book updateBook = bookService.updateBook(authorId, bookId, book);
-		if (updateBook == null) {
+		Boolean updateBook = bookService.updateBook(authorId, bookId, book);
+		if (!updateBook) {
 			return new ResponseEntity<>("Book does not exist", HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(updateBook, HttpStatus.CREATED);

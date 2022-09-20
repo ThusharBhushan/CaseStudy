@@ -21,6 +21,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { AllmybookComponent } from './allmybook/allmybook.component';
+import { UpdatebookComponent } from './updatebook/updatebook.component';
 
 
 
@@ -36,6 +37,7 @@ import { AllmybookComponent } from './allmybook/allmybook.component';
     FooterComponent,
     HomeComponent,
     AllmybookComponent,
+    UpdatebookComponent,
     
   ],
   imports: [

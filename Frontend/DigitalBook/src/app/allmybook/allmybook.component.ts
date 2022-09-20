@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookserviceService } from '../bookservice.service';
-import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-allmybook',
@@ -8,6 +9,18 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./allmybook.component.css']
 })
 export class AllmybookComponent implements OnInit {
+  book = {
+    title: '',
+    category: '',
+    logo: '',
+    price: NaN,
+    author: '',
+    publisher: '',
+    published_date: new Date(),
+    active: '',
+    userid: 1,
+    content: ''
+  }
   bookList: any[] = [];
   readerPurchasedBooks = {
     bookId: NaN,
@@ -22,7 +35,7 @@ export class AllmybookComponent implements OnInit {
   searchBookReaderPaymentId: String = '';
   dialogValue:String="";
 
-  constructor(public bookService: BookserviceService,public dialog: MatDialog) { }
+  constructor(public bookService: BookserviceService,public route: Router) { }
 
   ngOnInit(): void {
     console.log(localStorage.getItem('userRole'));
@@ -85,30 +98,12 @@ export class AllmybookComponent implements OnInit {
       }
     );
   }
-  // openDialog() {
-  //     const dialogRef = this.dialog.open(UpdateBookComponent, {
-  //       width: '250px',
-  //       backdropClass: 'custom-dialog-backdrop-class',
-  //       panelClass: 'custom-dialog-panel-class',
-  //       disableClose:true,
-  //       data: { pageValue: this.bookList }
-  //     });
-  
-  //     dialogRef.afterClosed().subscribe(result => {
-  //       console.log('The dialog was closed', result);
-  //       this.dialogValue = result.data;
-  //     });
-  // }
-  updateBook(authorId: any, bookId: any) {
-    const observable = this.bookService.editBook(authorId, bookId);
-    observable.subscribe((response: any) => {
-      console.log(response);
-    },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+
+  editBook(book:any){
+    this.bookService.getEditBook(book);
+    this.route.navigate(["/updatebook"]);
   }
+ 
 
 
 }

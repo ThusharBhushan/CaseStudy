@@ -7,6 +7,7 @@
                         <th>Title</th>
                         <th>Author</th>
                         <th>Price</th>
+                        <th>Edit Book</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -14,7 +15,7 @@
                         <td>{{b.title}}</td>
                         <td>{{b.author}}</td>
                         <td>{{b.price}}</td>
-                        <!-- <button class='btn btn-outline-primary' (click)='()'>Edit</button> -->
+                        <button class='btn btn-outline-primary' (click)='editBook(b)'>Edit</button>
                     </tr>
                 </tbody>
             </table>

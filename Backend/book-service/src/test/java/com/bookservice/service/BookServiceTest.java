@@ -59,8 +59,10 @@ public class BookServiceTest {
 
 		Mockito.lenient().when(bookRepository.findById(book.getUserid())).thenReturn(bookObject);
 		book.setPublisher("Andrew");
-		Mockito.lenient().when(bookRepository.save(book)).thenReturn(book);
-		assertEquals(book.getPublisher(), "Andrew");
+		bookRepository.bookToUpdate(book.getUserid(), book.getId(), book.getTitle(), book.getCategory().toString(), book.getPrice(),
+				book.getAuthor(), book.getPublished_date(), book.getActive().toString(), book.getContent(),
+				book.getPublisher());
+		assertEquals(true, Mockito.lenient().when(bookService.updateBook(book.getUserid(), book.getId(),book)).thenReturn(true));
 
 	}
 	@Test

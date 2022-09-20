@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { UpdatebookComponent } from './updatebook/updatebook.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: "allbook", component: AllmybookComponent},
   { path: "header", component: HeaderComponent},
+  { path: "updatebook", component: UpdatebookComponent},
   { path: "createbook", component: CreateBookComponent}
 ];
 

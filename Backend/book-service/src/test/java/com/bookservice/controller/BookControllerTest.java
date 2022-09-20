@@ -231,7 +231,7 @@ public class BookControllerTest {
 		book.setCategory(Category.DRAMA);
 		book.setActive(Status.ACTIVE);
 		Mockito.lenient().when(bookRepository.existsById(book.getUserid())).thenReturn(true);
-		Mockito.lenient().when(bookService.updateBook(book.getUserid(), book.getId(), book)).thenReturn(book);
+		Mockito.lenient().when(bookService.updateBook(book.getUserid(), book.getId(), book)).thenReturn(true);
 		assertEquals(book.getId(), (long) 1);
 
 	}
@@ -249,8 +249,8 @@ public class BookControllerTest {
 		book.setCategory(Category.DRAMA);
 		book.setActive(Status.ACTIVE);
 
-		Mockito.lenient().when(bookRepository.existsById(book.getUserid())).thenReturn(true);
-		Mockito.lenient().when(bookService.updateBook(book.getUserid(), book.getId(), book)).thenReturn(null);
+		Mockito.lenient().when(userRepository.existsById(book.getUserid())).thenReturn(true);
+		Mockito.lenient().when(bookService.updateBook(book.getUserid(), book.getId(), book)).thenReturn(true);
 		ResponseEntity responseEntity = new ResponseEntity<>("Book does not exist", HttpStatus.NOT_FOUND);
 		assertEquals(responseEntity.getBody(), "Book does not exist");
 
@@ -262,7 +262,7 @@ public class BookControllerTest {
 		book.setId((long) 1);
 		book.setUserid((long) 3);
 		ResponseEntity responseEntity = new ResponseEntity<>("Author does not exist", HttpStatus.UNAUTHORIZED);
-		Mockito.lenient().when(bookRepository.existsById(book.getUserid())).thenReturn(false);
+		Mockito.lenient().when(userRepository.existsById(book.getUserid())).thenReturn(false);
 		assertEquals(responseEntity.getBody(), "Author does not exist");
 
 	}
@@ -279,8 +279,8 @@ public class BookControllerTest {
 		book.setPrice(new BigDecimal("500.00"));
 		book.setCategory(Category.DRAMA);
 		book.setActive(Status.ACTIVE);
-		Mockito.lenient().when(bookRepository.existsById(book.getUserid())).thenReturn(true);
-		Mockito.lenient().when(bookService.updateBook(book.getUserid(), book.getId(), book)).thenReturn(book);
+		Mockito.lenient().when(userRepository.existsById(book.getUserid())).thenReturn(true);
+		Mockito.lenient().when(bookService.updateBook(book.getUserid(), book.getId(), book)).thenReturn(true);
 		ResponseEntity responseEntity = new ResponseEntity<>(book, HttpStatus.CREATED);
 		Mockito.lenient().when(bookController.updateBook(book.getId(), book.getUserid(), book))
 				.thenReturn(responseEntity);
